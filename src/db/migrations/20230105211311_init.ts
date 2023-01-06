@@ -25,7 +25,7 @@ export async function up(knex: Knex): Promise<void> {
 
 export async function down(knex: Knex): Promise<void> {
   return knex.schema
-  .dropTableIfExists('meal_addons')
-  .dropTableIfExists('brands')
-  .dropTableIfExists('categories');
+    .dropTableIfExists('meal_addons')
+    .dropTableIfExists('brands')
+    .dropTableIfExists('categories');
 }
