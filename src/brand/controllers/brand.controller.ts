@@ -19,12 +19,12 @@ import {
   UpdateMealAddonDto,
   CreateMealAddonDto,
 } from '../dtos';
-import { BrandService } from '../services/brand.service';
+import { MealAddonService } from '../services';
 
 @Controller('brands')
 @UseInterceptors(CacheInterceptor)
 export class BrandController {
-  constructor(private brandService: BrandService) {}
+  constructor(private mealAddonService: MealAddonService) {}
 
   @Post(':brandId/addons')
   @UsePipes(new ValidationPipe({ transform: true } as ValidationPipeOptions))
@@ -37,7 +37,7 @@ export class BrandController {
 
   @Get(':brandId/addons')
   getAllMeals(@Param('brandId', ParseIntPipe) brandId: number) {
-    return this.brandService.findAllMeals(brandId);
+    return this.mealAddonService.findAllMeals(brandId);
   }
 
   @Get(':brandId/addons/:addonId')
@@ -45,7 +45,7 @@ export class BrandController {
     @Param('brandId', ParseIntPipe) brandId: number,
     @Param('addonId', ParseIntPipe) addonId: number,
   ) {
-    return this.brandService.findOneMeal(brandId, addonId);
+    return this.mealAddonService.findOneMeal(brandId, addonId);
   }
 
   @Patch(':brandId/addons/:addonId')
@@ -63,7 +63,7 @@ export class BrandController {
     @Param('brandId', ParseIntPipe) _brandId: number,
     @Param('addonId', ParseIntPipe) addonId: number,
   ) {
-    return this.brandService.removeOneMeal(_brandId, addonId);
+    return this.mealAddonService.removeOneMeal(_brandId, addonId);
   }
 
   @Post(':brandId/addon-categories')
