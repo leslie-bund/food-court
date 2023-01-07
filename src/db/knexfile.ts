@@ -3,13 +3,13 @@ import { Logger } from '@nestjs/common';
 import 'dotenv/config';
 import { Knex } from 'knex';
 
+// console.dir(process.env);
 // Update with your config settings.
 
 const config: { [k: string]: Knex.Config } = {
   development: {
     client: 'pg',
-    connection:
-      'postgres://mlfwnrgy:fNVOj1BtJfTdqFOztNXIYabjb-B1xZXJ@rogue.db.elephantsql.com/mlfwnrgy',
+    connection: process.env.DB_URI,
     pool: {
       min: 2,
       max: 100,
@@ -25,8 +25,7 @@ const config: { [k: string]: Knex.Config } = {
 
   production: {
     client: 'pg',
-    connection:
-      'postgres://mlfwnrgy:fNVOj1BtJfTdqFOztNXIYabjb-B1xZXJ@rogue.db.elephantsql.com/mlfwnrgy',
+    connection: process.env.DB_URI,
     pool: {
       min: 2,
       max: 100,

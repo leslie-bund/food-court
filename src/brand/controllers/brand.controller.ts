@@ -1,43 +1,77 @@
-import { Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  CacheInterceptor,
+  UseInterceptors,
+  UsePipes,
+  ValidationPipe,
+  type ValidationPipeOptions,
+  Body,
+  ParseIntPipe,
+} from '@nestjs/common';
+import {
+  CreateBrandCategoryDto,
+  UpdateMealAddonDto,
+  CreateMealAddonDto,
+} from '../dtos';
+import { BrandService } from '../services/brand.service';
 
 @Controller('brands')
+@UseInterceptors(CacheInterceptor)
 export class BrandController {
+  constructor(private brandService: BrandService) {}
+
   @Post(':brandId/addons')
-  createMealAddon(@Param('brandId') brandId: number) {
-    return { go: 'seline' };
+  @UsePipes(new ValidationPipe({ transform: true } as ValidationPipeOptions))
+  createMealAddon(
+    @Param('brandId', ParseIntPipe) brandId: number,
+    @Body() createMealDto: CreateMealAddonDto,
+  ) {
+    return { brandId };
   }
 
   @Get(':brandId/addons')
-  getAllMeals(@Param('brandId') brandId: number) {
-    return { go: 'seline' };
+  getAllMeals(@Param('brandId', ParseIntPipe) brandId: number) {
+    return this.brandService.findAllMeals(brandId);
   }
 
   @Get(':brandId/addons/:addonId')
   getSingleMeal(
-    @Param('brandId') brandId: number,
-    @Param('addonId') addonId: number,
+    @Param('brandId', ParseIntPipe) brandId: number,
+    @Param('addonId', ParseIntPipe) addonId: number,
   ) {
-    return { go: 'seline' };
+    return this.brandService.findOneMeal(brandId, addonId);
   }
 
   @Patch(':brandId/addons/:addonId')
+  @UsePipes(new ValidationPipe({ transform: true } as ValidationPipeOptions))
   editSingleMeal(
-    @Param('brandId') brandId: number,
-    @Param('addonId') addonId: number,
+    @Param('brandId', ParseIntPipe) brandId: number,
+    @Param('addonId', ParseIntPipe) addonId: number,
+    @Body() updateMealDto: UpdateMealAddonDto,
   ) {
     return 'hello';
   }
 
   @Delete(':brandId/addons/:addonId')
   deleteSingleMeal(
-    @Param('brandId') brandId: number,
-    @Param('addonId') addonId: number,
+    @Param('brandId', ParseIntPipe) _brandId: number,
+    @Param('addonId', ParseIntPipe) addonId: number,
   ) {
-    return 'deleted';
+    return this.brandService.removeOneMeal(_brandId, addonId);
   }
 
   @Post(':brandId/addon-categories')
-  createCategoryForBrand(@Param('brandId') brandId: number) {
+  @UsePipes(new ValidationPipe({ transform: true } as ValidationPipeOptions))
+  createCategoryForBrand(
+    @Param('brandId', ParseIntPipe) brandId: number,
+    @Body() createCategoryPayload: CreateBrandCategoryDto,
+  ) {
     return 'category created';
   }
 }
