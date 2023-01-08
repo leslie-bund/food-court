@@ -1,4 +1,4 @@
-import { Module, CacheModule } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { BrandModule } from './brand/brand.module';
@@ -11,9 +11,6 @@ import { ConfigModule } from '@nestjs/config';
   imports: [
     BrandModule,
     DbModule,
-    CacheModule.register({
-      isGlobal: true,
-    }),
     AuthModule,
     UsersModule,
     ConfigModule.forRoot({

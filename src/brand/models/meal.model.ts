@@ -32,12 +32,10 @@ export default class MealModel extends BaseModel {
           type: 'string',
           minLength: 1,
           maxLength: 255,
-          pattern: '/[a-zA-Z]+/',
         },
         description: {
           type: ['string', 'null'],
           maxLength: 1000,
-          pattern: '/[a-zA-Z]+/',
         },
         price: { type: 'string' },
         categoryId: { type: ['integer', 'null'] },

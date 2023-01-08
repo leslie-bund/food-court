@@ -1,10 +1,5 @@
 import { BaseModel } from '.';
-import {
-  type JSONSchema,
-  // Model,
-  // type RelationMappings,
-  // type RelationMappingsThunk,
-} from 'objection';
+import { type JSONSchema } from 'objection';
 
 export default class CategoryModel extends BaseModel {
   static get tableName(): string {

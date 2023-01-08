@@ -1,10 +1,13 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { CreateMealAddonDto, UpdateMealAddonDto } from 'src/brand/dtos';
 import { MealModel } from 'src/brand/models';
+import CategoryService from '../category/category.service';
 
 @Injectable()
 export default class MealService {
-  findAllMeals(brandId: number): any {
+  constructor(private categoryService: CategoryService) {}
+
+  async findAllMeals(brandId: number): Promise<any> {
     try {
       return MealModel.query().select('*').where('brandId', brandId);
     } catch (error: any) {
@@ -12,7 +15,7 @@ export default class MealService {
     }
   }
 
-  findOneMeal(brandId: number, addonId: number): any {
+  async findOneMeal(brandId: number, addonId: number): Promise<any> {
     try {
       return MealModel.query()
         .select('*')
@@ -38,14 +41,20 @@ export default class MealService {
     }
   }
 
-  removeOneMeal(brandId: number, addonId: number): any {
+  async removeOneMeal(brandId: number, addonId: number): Promise<any> {
     try {
-      return MealModel.query()
+      const rowsDeleted = await MealModel.query()
         .delete()
         .where('brandId', brandId)
         .where('id', addonId);
+
+      if (rowsDeleted > 0) {
+        return { status: 'Successful', message: 'Meal Deleted' };
+      }
     } catch (error: any) {
       throw new HttpException(error, HttpStatus.NOT_IMPLEMENTED);
     }
+
+    return { status: 'Successful', message: 'No meal was Deleted' };
   }
 }

@@ -6,8 +6,6 @@ import {
   Param,
   Patch,
   Post,
-  CacheInterceptor,
-  UseInterceptors,
   UsePipes,
   ValidationPipe,
   type ValidationPipeOptions,
@@ -26,7 +24,6 @@ import { MealAddonService, CategoryService } from '../services';
 
 @Controller('brands')
 @UseGuards(JwtAuthGuard)
-@UseInterceptors(CacheInterceptor)
 export class BrandController {
   constructor(
     private mealAddonService: MealAddonService,
@@ -38,7 +35,7 @@ export class BrandController {
   @UsePipes(new ValidationPipe({ transform: true } as ValidationPipeOptions))
   createMealAddon(
     @Param('brandId', ParseIntPipe) brandId: number,
-    @Body() createMealDto: CreateMealAddonDto,
+    @Body() createMealpayload: CreateMealAddonDto,
   ) {
     return { brandId };
   }
@@ -64,7 +61,7 @@ export class BrandController {
   editSingleMeal(
     @Param('brandId', ParseIntPipe) brandId: number,
     @Param('addonId', ParseIntPipe) addonId: number,
-    @Body() updateMealDto: UpdateMealAddonDto,
+    @Body() updateMealpayload: UpdateMealAddonDto,
   ) {
     return 'hello';
   }
