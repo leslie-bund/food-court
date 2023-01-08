@@ -8,51 +8,112 @@ export default class MealService {
   constructor(private categoryService: CategoryService) {}
 
   async findAllMeals(brandId: number): Promise<any> {
-    try {
-      return MealModel.query().select('*').where('brandId', brandId);
-    } catch (error: any) {
-      throw new HttpException(error, HttpStatus.NOT_IMPLEMENTED);
-    }
+    return MealModel.query()
+      .select('*')
+      .where('brandId', brandId)
+      .catch(() => {
+        throw new HttpException(
+          'Failed to update Database',
+          HttpStatus.NOT_IMPLEMENTED,
+        );
+      });
   }
 
   async findOneMeal(brandId: number, addonId: number): Promise<any> {
-    try {
-      return MealModel.query()
-        .select('*')
-        .where('brandId', brandId)
-        .where('id', addonId);
-    } catch (error: any) {
-      throw new HttpException(error, HttpStatus.NOT_IMPLEMENTED);
-    }
+    return MealModel.query()
+      .select('*')
+      .where('brandId', brandId)
+      .where('id', addonId)
+      .catch(() => {
+        throw new HttpException(
+          'Failed to update Database',
+          HttpStatus.NOT_IMPLEMENTED,
+        );
+      });
   }
 
-  createMeal(brandId: number, payload: CreateMealAddonDto) {
-    console.log(brandId, payload);
-    return 'This action adds a new boom';
+  async createMeal(brandId: number, payload: CreateMealAddonDto) {
+    const { category, ...info } = payload;
+    let categoryId;
+    const data = await this.categoryService.findOneCategory(brandId, category);
+    try {
+      const { id } = data.pop();
+      categoryId = id;
+    } catch (error) {
+      throw new HttpException(
+        `Category ${category} doesn't belong to a brand`,
+        HttpStatus.NOT_ACCEPTABLE,
+      );
+    }
+
+    return await MealModel.query()
+      .insert({
+        ...info,
+        categoryId,
+        brandId,
+      })
+      .catch(() => {
+        throw new HttpException(
+          'Failed to update Database',
+          HttpStatus.NOT_IMPLEMENTED,
+        );
+      });
   }
 
-  updateOneMeal(brandId: number, addonId: number, payload: UpdateMealAddonDto) {
-    console.log(payload);
-    try {
-      return MealModel.query().where('brandId', brandId).where('id', addonId);
-      // .patch();
-    } catch (error: any) {
-      throw new HttpException(error, HttpStatus.NOT_IMPLEMENTED);
+  async updateOneMeal(
+    brandId: number,
+    addonId: number,
+    payload: UpdateMealAddonDto,
+  ) {
+    const { category, ...info } = payload;
+    let categoryId;
+    if (typeof category === 'string') {
+      const data = await this.categoryService.findOneCategory(
+        brandId,
+        category,
+      );
+      try {
+        const { id } = data.pop();
+        categoryId = id;
+      } catch (error) {
+        throw new HttpException(
+          `Category ${category} doesn't belong to this brand`,
+          HttpStatus.NOT_ACCEPTABLE,
+        );
+      }
     }
+    const rowsUpdated = await MealModel.query()
+      .where('brandId', brandId)
+      .where('id', addonId)
+      .patch(categoryId ? { categoryId, ...info } : info)
+      .catch(() => {
+        throw new HttpException(
+          'Failed to update Database',
+          HttpStatus.NOT_IMPLEMENTED,
+        );
+      });
+
+    if (rowsUpdated > 0) {
+      return { status: 'Successful', message: 'Meal Deleted' };
+    }
+
+    return { status: 'Successful', message: 'No meal was Deleted' };
   }
 
   async removeOneMeal(brandId: number, addonId: number): Promise<any> {
-    try {
-      const rowsDeleted = await MealModel.query()
-        .delete()
-        .where('brandId', brandId)
-        .where('id', addonId);
+    const rowsDeleted = await MealModel.query()
+      .delete()
+      .where('brandId', brandId)
+      .where('id', addonId)
+      .catch(() => {
+        throw new HttpException(
+          'Failed to update Database',
+          HttpStatus.NOT_IMPLEMENTED,
+        );
+      });
 
-      if (rowsDeleted > 0) {
-        return { status: 'Successful', message: 'Meal Deleted' };
-      }
-    } catch (error: any) {
-      throw new HttpException(error, HttpStatus.NOT_IMPLEMENTED);
+    if (rowsDeleted > 0) {
+      return { status: 'Successful', message: 'Meal Deleted' };
     }
 
     return { status: 'Successful', message: 'No meal was Deleted' };

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Controller,
   Delete,
@@ -12,8 +11,13 @@ import {
   Body,
   ParseIntPipe,
   UseGuards,
+  UseInterceptors,
+  CacheInterceptor,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
+import { TimeoutInterceptor } from 'src/timeout/timeout.interceptor';
 import {
   CreateBrandCategoryDto,
   UpdateMealAddonDto,
@@ -33,21 +37,25 @@ export class BrandController {
   @Post(':brandId/addons')
   @UseGuards(AdminGuard)
   @UsePipes(new ValidationPipe({ transform: true } as ValidationPipeOptions))
-  createMealAddon(
+  async createMealAddon(
     @Param('brandId', ParseIntPipe) brandId: number,
     @Body() createMealpayload: CreateMealAddonDto,
   ) {
-    return { brandId };
+    return this.mealAddonService.createMeal(brandId, createMealpayload);
   }
 
   @Get(':brandId/addons')
   @UseGuards(AdminGuard)
+  @UseInterceptors(CacheInterceptor)
+  @UseInterceptors(TimeoutInterceptor)
   getAllMeals(@Param('brandId', ParseIntPipe) brandId: number) {
     return this.mealAddonService.findAllMeals(brandId);
   }
 
   @Get(':brandId/addons/:addonId')
   @UseGuards(AdminGuard)
+  @UseInterceptors(CacheInterceptor)
+  @UseInterceptors(TimeoutInterceptor)
   getSingleMeal(
     @Param('brandId', ParseIntPipe) brandId: number,
     @Param('addonId', ParseIntPipe) addonId: number,
@@ -63,11 +71,16 @@ export class BrandController {
     @Param('addonId', ParseIntPipe) addonId: number,
     @Body() updateMealpayload: UpdateMealAddonDto,
   ) {
-    return 'hello';
+    return this.mealAddonService.updateOneMeal(
+      brandId,
+      addonId,
+      updateMealpayload,
+    );
   }
 
   @Delete(':brandId/addons/:addonId')
   @UseGuards(AdminGuard)
+  @UseInterceptors(TimeoutInterceptor)
   deleteSingleMeal(
     @Param('brandId', ParseIntPipe) _brandId: number,
     @Param('addonId', ParseIntPipe) addonId: number,

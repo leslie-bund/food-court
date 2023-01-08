@@ -1,7 +1,7 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { IUser } from 'src/users/entities';
+import { IUser } from 'src/users/interfaces';
 import { UsersService } from 'src/users/services/users.service';
 import { ConfigService } from '@nestjs/config';
 

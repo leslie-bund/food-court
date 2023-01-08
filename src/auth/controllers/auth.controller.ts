@@ -1,6 +1,6 @@
 import { Controller, UseGuards, Post, Request, Get } from '@nestjs/common';
 import { Request as Req } from 'express';
-import { IUser } from 'src/users/entities';
+import { IUser } from 'src/users/interfaces';
 import { JwtAuthGuard } from '../guards/jwt-auth.guard';
 import { LocalAuthGuard } from '../guards/local-auth.guard';
 import { AuthService } from '../services/auth.service';
