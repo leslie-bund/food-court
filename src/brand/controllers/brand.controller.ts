@@ -13,20 +13,28 @@ import {
   type ValidationPipeOptions,
   Body,
   ParseIntPipe,
+  UseGuards,
 } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import {
   CreateBrandCategoryDto,
   UpdateMealAddonDto,
   CreateMealAddonDto,
 } from '../dtos';
-import { MealAddonService } from '../services';
+import { AdminGuard } from '../guards/admin.guard';
+import { MealAddonService, CategoryService } from '../services';
 
 @Controller('brands')
+@UseGuards(JwtAuthGuard)
 @UseInterceptors(CacheInterceptor)
 export class BrandController {
-  constructor(private mealAddonService: MealAddonService) {}
+  constructor(
+    private mealAddonService: MealAddonService,
+    private categoryService: CategoryService,
+  ) {}
 
   @Post(':brandId/addons')
+  @UseGuards(AdminGuard)
   @UsePipes(new ValidationPipe({ transform: true } as ValidationPipeOptions))
   createMealAddon(
     @Param('brandId', ParseIntPipe) brandId: number,
@@ -36,11 +44,13 @@ export class BrandController {
   }
 
   @Get(':brandId/addons')
+  @UseGuards(AdminGuard)
   getAllMeals(@Param('brandId', ParseIntPipe) brandId: number) {
     return this.mealAddonService.findAllMeals(brandId);
   }
 
   @Get(':brandId/addons/:addonId')
+  @UseGuards(AdminGuard)
   getSingleMeal(
     @Param('brandId', ParseIntPipe) brandId: number,
     @Param('addonId', ParseIntPipe) addonId: number,
@@ -49,6 +59,7 @@ export class BrandController {
   }
 
   @Patch(':brandId/addons/:addonId')
+  @UseGuards(AdminGuard)
   @UsePipes(new ValidationPipe({ transform: true } as ValidationPipeOptions))
   editSingleMeal(
     @Param('brandId', ParseIntPipe) brandId: number,
@@ -59,6 +70,7 @@ export class BrandController {
   }
 
   @Delete(':brandId/addons/:addonId')
+  @UseGuards(AdminGuard)
   deleteSingleMeal(
     @Param('brandId', ParseIntPipe) _brandId: number,
     @Param('addonId', ParseIntPipe) addonId: number,
@@ -67,11 +79,12 @@ export class BrandController {
   }
 
   @Post(':brandId/addon-categories')
+  @UseGuards(AdminGuard)
   @UsePipes(new ValidationPipe({ transform: true } as ValidationPipeOptions))
   createCategoryForBrand(
     @Param('brandId', ParseIntPipe) brandId: number,
     @Body() createCategoryPayload: CreateBrandCategoryDto,
   ) {
-    return 'category created';
+    return this.categoryService.createCategory(brandId, createCategoryPayload);
   }
 }

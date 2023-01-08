@@ -1,6 +1,15 @@
-import { PartialType } from '@nestjs/mapped-types';
-import CreateMealAddonDto from './create-meal.dto';
+import { IsAlpha, IsCurrency } from 'class-validator';
 
-export default class UpdateMealAddonDto extends PartialType(
-  CreateMealAddonDto,
-) {}
+export default class UpdateMealAddonDto {
+  @IsAlpha()
+  name: string;
+
+  @IsAlpha()
+  description: string;
+
+  @IsCurrency()
+  price: string;
+
+  @IsAlpha()
+  category: string;
+}

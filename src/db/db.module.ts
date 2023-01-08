@@ -1,7 +1,7 @@
 import { Global, Module } from '@nestjs/common';
 import { Model } from 'objection';
 import knex from 'knex';
-import config from './knexfile';
+import config from '../../knexfile';
 import { BrandModel, CategoryModel, MealModel } from '../brand/models';
 
 const providers: any[] = [

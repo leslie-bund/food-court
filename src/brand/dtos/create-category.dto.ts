@@ -1,6 +1,7 @@
-import { PickType } from '@nestjs/mapped-types';
-import CreateMealAddonDto from './create-meal.dto';
+import { IsNotEmpty, IsAlpha } from 'class-validator';
 
-export default class CreateCategoryDto extends PickType(CreateMealAddonDto, [
-  'name',
-]) {}
+export default class CreateCategoryDto {
+  @IsNotEmpty()
+  @IsAlpha()
+  name: string;
+}

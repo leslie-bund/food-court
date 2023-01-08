@@ -1,9 +1,9 @@
-import { BaseModel, type BrandModel } from '.';
+import { BaseModel } from '.';
 import {
-  Model,
   type JSONSchema,
-  type RelationMappings,
-  type RelationMappingsThunk,
+  // Model,
+  // type RelationMappings,
+  // type RelationMappingsThunk,
 } from 'objection';
 
 export default class CategoryModel extends BaseModel {
@@ -12,7 +12,7 @@ export default class CategoryModel extends BaseModel {
   }
 
   name: string;
-  brand: BrandModel;
+  brandId: number;
 
   static get jsonSchema(): JSONSchema {
     return {
@@ -27,18 +27,18 @@ export default class CategoryModel extends BaseModel {
     };
   }
 
-  static get relationMappings(): RelationMappings | RelationMappingsThunk {
-    const Brand = `${__dirname}./brand.model`;
+  // static get relationMappings(): RelationMappings | RelationMappingsThunk {
+  //   const Brand = `${__dirname}./brand.model`;
 
-    return {
-      brand: {
-        modelClass: Brand,
-        relation: Model.HasOneRelation,
-        join: {
-          from: 'categories.brandId',
-          to: 'brands.id',
-        },
-      },
-    };
-  }
+  //   return {
+  //     brand: {
+  //       modelClass: Brand,
+  //       relation: Model.HasOneRelation,
+  //       join: {
+  //         from: 'categories.brandId',
+  //         to: 'brands.id',
+  //       },
+  //     },
+  //   };
+  // }
 }

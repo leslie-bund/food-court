@@ -1,9 +1,13 @@
-import { BaseModel, type CategoryModel, type BrandModel } from '.';
+import {
+  BaseModel,
+  // type CategoryModel,
+  // type BrandModel
+} from '.';
 import {
   JSONSchema,
-  Model,
-  RelationMappings,
-  RelationMappingsThunk,
+  // Model,
+  // RelationMappings,
+  // RelationMappingsThunk,
 } from 'objection';
 
 export default class MealModel extends BaseModel {
@@ -14,8 +18,8 @@ export default class MealModel extends BaseModel {
   name: string;
   description: string;
   price: string;
-  category: CategoryModel;
-  brand: BrandModel;
+  categoryId: number;
+  brandId: number;
 
   static get jsonSchema(): JSONSchema {
     return {
@@ -42,27 +46,27 @@ export default class MealModel extends BaseModel {
     };
   }
 
-  static get relationMappings(): RelationMappings | RelationMappingsThunk {
-    const Brand = `${__dirname}/brand.model`;
-    const Category = `${__dirname}/category.model`;
+  // static get relationMappings(): RelationMappings | RelationMappingsThunk {
+  //   const Brand = `${__dirname}/brand.model`;
+  //   const Category = `${__dirname}/category.model`;
 
-    return {
-      category: {
-        modelClass: Category,
-        relation: Model.HasOneRelation,
-        join: {
-          from: 'meal_addons.categoryId',
-          to: 'categories.id',
-        },
-      },
-      brand: {
-        modelClass: Brand,
-        relation: Model.HasOneRelation,
-        join: {
-          from: 'meal_addons.brandId',
-          to: 'brands.id',
-        },
-      },
-    };
-  }
+  //   return {
+  //     category: {
+  //       modelClass: Category,
+  //       relation: Model.HasOneRelation,
+  //       join: {
+  //         from: 'meal_addons.categoryId',
+  //         to: 'categories.id',
+  //       },
+  //     },
+  //     brand: {
+  //       modelClass: Brand,
+  //       relation: Model.HasOneRelation,
+  //       join: {
+  //         from: 'meal_addons.brandId',
+  //         to: 'brands.id',
+  //       },
+  //     },
+  //   };
+  // }
 }

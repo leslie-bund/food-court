@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
-import { BrandController } from './controllers/brand.controller';
-import BrandService from './services/brand/brand.service';
-import CategoryService from './services/category/category.service';
-import MealService from './services/meal/meal.service';
+import { AuthModule } from 'src/auth/auth.module';
+import { BrandController } from '../brand/controllers/brand.controller';
+import BrandService from '../brand/services/brand/brand.service';
+import CategoryService from '../brand/services/category/category.service';
+import MealService from '../brand/services/meal/meal.service';
 
 @Module({
+  imports: [AuthModule],
   controllers: [BrandController],
   providers: [BrandService, MealService, CategoryService],
 })

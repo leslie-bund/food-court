@@ -40,7 +40,7 @@ export async function seed(knex: Knex): Promise<void> {
       description: 'Persevering web-enabled complexity',
       price: '$6.94',
       categoryId: 1,
-      brandId: 1,
+      brandId: 10,
     },
     {
       id: 2,
@@ -48,7 +48,7 @@ export async function seed(knex: Knex): Promise<void> {
       description: 'Balanced disintermediate architecture',
       price: '$5.92',
       categoryId: 2,
-      brandId: 2,
+      brandId: 9,
     },
     {
       id: 3,
@@ -56,7 +56,7 @@ export async function seed(knex: Knex): Promise<void> {
       description: 'Ameliorated 4th generation access',
       price: '$3.11',
       categoryId: 3,
-      brandId: 3,
+      brandId: 1,
     },
     {
       id: 4,
@@ -64,7 +64,7 @@ export async function seed(knex: Knex): Promise<void> {
       description: 'Assimilated multi-tasking projection',
       price: '$8.47',
       categoryId: 4,
-      brandId: 4,
+      brandId: 3,
     },
     {
       id: 5,
@@ -72,7 +72,7 @@ export async function seed(knex: Knex): Promise<void> {
       description: 'Intuitive non-volatile paradigm',
       price: '$0.0',
       categoryId: 5,
-      brandId: 5,
+      brandId: 7,
     },
     {
       id: 6,
@@ -80,7 +80,7 @@ export async function seed(knex: Knex): Promise<void> {
       description: 'Horizontal encompassing conglomeration',
       price: '$8.61',
       categoryId: 6,
-      brandId: 6,
+      brandId: 4,
     },
     {
       id: 7,
@@ -88,7 +88,7 @@ export async function seed(knex: Knex): Promise<void> {
       description: 'Decentralized interactive archive',
       price: '$0.71',
       categoryId: 7,
-      brandId: 7,
+      brandId: 6,
     },
     {
       id: 8,
@@ -96,7 +96,7 @@ export async function seed(knex: Knex): Promise<void> {
       description: 'Synergistic non-volatile open system',
       price: '$7.55',
       categoryId: 8,
-      brandId: 8,
+      brandId: 2,
     },
     {
       id: 9,
@@ -104,7 +104,7 @@ export async function seed(knex: Knex): Promise<void> {
       description: 'Down-sized coherent open system',
       price: '$6.85',
       categoryId: 9,
-      brandId: 9,
+      brandId: 8,
     },
     {
       id: 10,
@@ -112,7 +112,7 @@ export async function seed(knex: Knex): Promise<void> {
       description: 'Pre-emptive even-keeled circuit',
       price: '$1.5',
       categoryId: 10,
-      brandId: 10,
+      brandId: 5,
     },
   ]);
 }
