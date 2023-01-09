@@ -18,7 +18,6 @@ $ JWT_SECRET='<secret string for authentication>'
 ```
 
 To start the server in different modes run the following commands
-
 ```bash
 # development
 $ npm run start
