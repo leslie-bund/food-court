@@ -52,9 +52,42 @@ $ npm run seed:db
 
 ## API Usage
 
-Access the hosted [API](food-court-production.up.railway.app)
+Access the hosted [API](food-court-production.up.railway.app) here.
 
+The system has two default users whom can login using the following details.
+
+```js
+{
+    username: 'john',
+    password: 'changeme',
+    role: 'ADMIN',
+},
+{
+    username: 'maria',
+    password: 'guess',
+    role: 'USER',
+},
+```
+
+## Available Routes
+
+The Following routes are available
+
+| Method | Path                              |
+| :----  |    :-------------------------:    |
+| POST   | /brands/:brandId/addons           |
+| GET    | /brands/:brandId/addons           |
+| GET    | /brands/:brandId/addons/:addonId  |
+| PATCH  | /brands/:brandId/addons/:addonId  |
+| DELETE | /brands/:brandId/addons/:addonId  |
+| POST   | /brands/:brandId/addon-categories |
+| :----- |    :----------------------------: |
+| POST   | /auth/login                       |
+| GET    | /auth/profile                     |
+
+
+Kindly Inspect the DTO's to know the shape of the request object for each of the routes above
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+This Project was built by [Leslie Chukwunweike](https://github.com/leslie-bund).
