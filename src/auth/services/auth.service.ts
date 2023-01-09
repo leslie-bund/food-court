@@ -17,7 +17,6 @@ export class AuthService {
     const user = await this.usersService.findOne(username);
     if (user && user.password === pass) {
       delete user?.password;
-      delete user?.role;
       return user;
     }
     return null;
