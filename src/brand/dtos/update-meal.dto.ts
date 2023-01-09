@@ -1,15 +1,15 @@
-import { IsAlpha, IsCurrency } from 'class-validator';
+import { IsCurrency, IsString } from 'class-validator';
 
 export default class UpdateMealAddonDto {
-  @IsAlpha()
+  @IsString()
   name: string;
 
-  @IsAlpha()
+  @IsString()
   description: string;
 
   @IsCurrency()
   price: string;
 
-  @IsAlpha()
+  @IsString()
   category: string;
 }

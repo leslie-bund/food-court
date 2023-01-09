@@ -1,17 +1,17 @@
-import { IsNotEmpty, IsCurrency, IsAlpha } from 'class-validator';
+import { IsNotEmpty, IsCurrency, IsString } from 'class-validator';
 
 export default class CreateMealAddonDto {
   @IsNotEmpty()
-  @IsAlpha()
+  @IsString()
   name: string;
 
-  @IsAlpha()
+  @IsString()
   description: string;
 
   @IsCurrency()
   @IsNotEmpty()
   price: string;
 
-  @IsAlpha()
+  @IsString()
   category: string;
 }

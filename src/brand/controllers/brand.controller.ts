@@ -13,8 +13,6 @@ import {
   UseGuards,
   UseInterceptors,
   CacheInterceptor,
-  HttpException,
-  HttpStatus,
 } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { TimeoutInterceptor } from 'src/timeout/timeout.interceptor';

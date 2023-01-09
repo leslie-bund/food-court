@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { CreateMealAddonDto, UpdateMealAddonDto } from 'src/brand/dtos';
 import { MealModel } from 'src/brand/models';
 import CategoryService from '../category/category.service';
